@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Varai Cafe — Book a table</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Varai Cafe: coffee, chai and bites. Pick a time, get a booking code, walk straight in.">
+<meta name="theme-color" content="#1D3FD8">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231D3FD8'/%3E%3Cpath d='M16 26h28v10a12 12 0 0 1-12 12h-4a12 12 0 0 1-12-12V26z' fill='%23FFB81C'/%3E%3Cpath d='M44 29h3a5 5 0 0 1 0 10h-4' stroke='%23fff' stroke-width='3' fill='none'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Young+Serif&family=Tiro+Devanagari+Hindi&family=Hind:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1B1613;--paper:#FBFAF7;--blue:#1D3FD8;--blue2:#1631AE;--sun:#FFB81C;--line:#E4E0D6;--mute:#686258;--ok:#1F8A4C;--bad:#C2321F;
+--disp:'Young Serif','Tiro Devanagari Hindi',Georgia,serif;--body:'Figtree','Hind',system-ui,-apple-system,'Segoe UI',sans-serif}
+*,*::before,*::after{box-sizing:border-box}*{margin:0}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:76px;-webkit-text-size-adjust:100%}
+body{font-family:var(--body);background:var(--paper);color:var(--ink);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button,input{font:inherit;color:inherit}button{cursor:pointer}a{color:inherit}
+:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.card :focus-visible,.menu-sec :focus-visible,#admin :focus-visible{outline-color:var(--blue)}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--disp);font-weight:400;letter-spacing:-.015em;line-height:1.05}
+html[lang=hi] h1,html[lang=hi] h2,html[lang=hi] h3{letter-spacing:0;line-height:1.3}
+h2{font-size:clamp(34px,4.6vw,56px)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 24px;border-radius:12px;border:2px solid var(--blue);background:var(--blue);color:#fff;font-weight:700;text-decoration:none;transition:background .15s,transform .1s}
+.btn:hover{background:var(--blue2);border-color:var(--blue2)}.btn:active{transform:translateY(1px)}
+.btn.sun{background:var(--sun);border-color:var(--sun);color:var(--ink)}.btn.sun:hover{background:#f0a800;border-color:#f0a800}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--ink)}.btn.ghost:hover{background:var(--ink);color:#fff}
+.btn.sm{min-height:40px;padding:0 16px;font-size:14px;border-radius:10px}
+/* header */
+header{position:sticky;top:0;z-index:30;background:var(--blue);color:#fff;padding-top:env(safe-area-inset-top,0px)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-size:23px;text-decoration:none}
+nav{display:flex;gap:28px;font-weight:600;font-size:15px}nav a{text-decoration:none;opacity:.8}nav a:hover{opacity:1}
+.right{display:flex;gap:10px;align-items:center}
+.lang{display:flex;background:rgba(255,255,255,.14);border-radius:10px;padding:3px}
+.lang button{border:0;background:none;border-radius:8px;min-width:42px;height:34px;font-weight:700;font-size:14px;color:#fff}
+.lang button.on{background:#fff;color:var(--blue)}
+/* hero: the checked tablecloth */
+.hero{background-color:var(--blue);background-image:conic-gradient(rgba(255,255,255,.08) 25%,transparent 0 50%,rgba(255,255,255,.08) 0 75%,transparent 0);background-size:72px 72px;color:#fff;padding:56px 0 72px}
+.hgrid{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
+.open{display:inline-flex;align-items:center;gap:8px;background:var(--paper);color:var(--ink);font-weight:600;font-size:14px;padding:7px 14px;border-radius:99px}
+.open i{width:9px;height:9px;border-radius:50%;background:var(--ok)}.open.shut i{background:var(--bad)}
+h1{font-size:clamp(46px,6.6vw,92px);line-height:.98;margin:22px 0}
+html[lang=hi] h1{font-size:clamp(38px,5.2vw,68px);line-height:1.2}
+.hero p.lead{font-size:19px;max-width:42ch;color:#dce3ff}
+.perks{list-style:none;padding:0;margin-top:28px;display:grid;gap:10px;font-weight:600}
+.perks li{display:flex;gap:12px;align-items:center}
+.perks svg{flex:none;background:var(--sun);border-radius:50%;padding:4px}
+/* booking card */
+.card{background:var(--paper);color:var(--ink);border:2px solid var(--ink);border-radius:18px;box-shadow:8px 8px 0 var(--ink);padding:clamp(20px,3vw,32px);min-height:470px;display:flex;flex-direction:column}
+.prog{display:flex;gap:6px;margin-bottom:18px}.prog i{flex:1;height:5px;border-radius:5px;background:var(--line)}.prog i.on{background:var(--blue)}
+.step{font-size:14px;font-weight:600;color:var(--mute)}
+.card h3{font-size:30px;margin:4px 0 6px}
+.lbl{display:block;font-weight:700;font-size:15px;margin:22px 0 10px}
+.stp{display:flex;align-items:center;gap:18px}
+.stp button{width:54px;height:54px;border-radius:50%;border:2px solid var(--ink);background:#fff;font-size:28px;line-height:1;font-weight:600}
+.stp button:hover{background:var(--ink);color:#fff}.stp button[disabled]{opacity:.3;pointer-events:none}
+.stp b{font-family:var(--disp);font-weight:400;font-size:52px;min-width:56px;text-align:center;line-height:1}
+.stp span{color:var(--mute);font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chips.scroll{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -4px;padding:4px}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:9px 14px;min-height:48px;min-width:64px;font-weight:700;font-size:15px;text-align:center;line-height:1.2;flex:none}
+.chip small{display:block;font-weight:500;font-size:12px;color:var(--mute)}
+.chip:hover{border-color:var(--ink)}
+.chip.on{background:var(--blue);border-color:var(--blue);color:#fff}.chip.on small,.chip.on em{color:#d6defc}
+.chip[disabled]{opacity:.4;text-decoration:line-through;cursor:not-allowed}
+.chip em{display:block;font-style:normal;font-size:11px;color:var(--bad);font-weight:700}
+.times{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.times .chip{min-width:0;padding:9px 4px}
+.sum{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid var(--line);border-left:5px solid var(--sun);border-radius:10px;padding:12px 14px;font-weight:600;margin:8px 0 0}
+input{width:100%;padding:14px;border:1.5px solid var(--ink);border-radius:10px;background:#fff;min-height:52px}
+input:focus{outline:3px solid var(--sun);outline-offset:0}
+.err{color:var(--bad);font-size:14px;margin-top:8px;min-height:20px;font-weight:600}.hint{color:var(--mute);font-size:14px;margin-top:10px}
+.nav2{margin-top:auto;padding-top:22px;display:flex;justify-content:space-between;gap:10px}.nav2 .btn:last-child{flex:1}
+/* confirmation ticket */
+.done{text-align:center;margin:auto 0}
+.tick{width:64px;height:64px;border-radius:50%;background:var(--ok);margin:0 auto 14px;display:grid;place-items:center;animation:pop .4s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:scale(.4);opacity:0}}
+.ticket{margin:18px 0;border:2px dashed var(--ink);border-radius:14px;padding:16px;background:#fff}
+.code{font-family:var(--disp);font-size:42px;letter-spacing:.06em;color:var(--blue);line-height:1.1}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+/* menu */
+.menu-sec{padding:88px 0}
+.mhead{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap}
+.mhead p{color:var(--mute);max-width:40ch}
+.tabs{display:flex;gap:6px;margin:30px 0 0;overflow-x:auto;scrollbar-width:none}
+.tabs button{border:2px solid var(--ink);border-bottom:0;background:transparent;border-radius:12px 12px 0 0;padding:12px 22px;font-weight:700;white-space:nowrap}
+.tabs button.on{background:var(--ink);color:var(--paper)}
+.menu{border:2px solid var(--ink);border-radius:0 14px 14px 14px;padding:12px clamp(18px,4vw,44px);background:#fff;display:grid;grid-template-columns:1fr 1fr;column-gap:56px}
+.item{display:flex;align-items:baseline;gap:10px;padding:18px 0}
+.item b{font-weight:600;font-size:18px;display:flex;align-items:center;gap:10px}
+.item hr{flex:1;border:0;border-bottom:2px dotted #bdb7aa;transform:translateY(-4px);min-width:16px}
+.item .p{font-family:var(--disp);font-size:19px}
+.v{width:15px;height:15px;border:1.5px solid var(--ok);border-radius:3px;display:inline-grid;place-items:center;flex:none}
+.v::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok)}.v.nv{border-color:var(--bad)}.v.nv::after{background:var(--bad)}
+/* visit */
+.visit{background:var(--ink);color:var(--paper);padding:88px 0 0}
+.vgrid{display:grid;grid-template-columns:1.2fr 1fr;gap:64px;margin-top:36px}
+.addr{font-family:var(--disp);font-size:clamp(26px,3.4vw,40px);line-height:1.2}
+.hrs{display:grid;gap:0}.hrs div{display:flex;justify-content:space-between;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.18);font-size:18px}
+footer{margin-top:72px;border-top:1px solid rgba(255,255,255,.18);padding:24px 0 32px;font-size:14px;color:#b9b3a8}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}footer a{margin-left:14px}
+/* admin */
+#admin{display:none;padding:40px 0 80px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0}
+.stat{border:2px solid var(--ink);border-radius:14px;padding:18px;background:#fff}.stat b{font-family:var(--disp);font-weight:400;font-size:44px;display:block;line-height:1.1}.stat span{color:var(--mute);font-size:14px;font-weight:600}
+.tw{overflow-x:auto;border:2px solid var(--ink);border-radius:14px;background:#fff}
+table{width:100%;border-collapse:collapse;min-width:680px}th,td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--line)}
+th{font-size:13px;color:var(--mute)}tr:last-child td{border:0}
+.pill{padding:4px 11px;border-radius:99px;font-size:13px;font-weight:700}
+.pill.confirmed{background:#dbeee3;color:var(--ok)}.pill.cancelled{background:#f8dcd7;color:var(--bad)}.pill.arrived{background:#dfe5ff;color:var(--blue)}
+.pin{max-width:340px;margin:80px auto;text-align:center}.pin input{text-align:center;letter-spacing:.5em;font-size:24px;margin:16px 0}
+@media(max-width:900px){nav{display:none}.hgrid,.vgrid{grid-template-columns:1fr;gap:40px}.hero{padding:36px 0 56px}.menu{grid-template-columns:1fr}.menu-sec,.visit{padding-top:60px}.card{box-shadow:5px 5px 0 var(--ink)}}
+@media(max-width:480px){.wrap{padding:0 16px}.btn.book-top{display:none}.stats{grid-template-columns:1fr 1fr}.times{grid-template-columns:repeat(3,1fr)}h3{font-size:26px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div id="site">
+<header><div class="wrap bar">
+  <a class="logo" href="#top"><svg width="30" height="30" viewBox="0 0 64 64" aria-hidden="true"><path d="M12 24h34v12a14 14 0 0 1-14 14h-6a14 14 0 0 1-14-14V24z" fill="#FFB81C"/><path d="M46 28h4a6 6 0 0 1 0 12h-5" stroke="#fff" stroke-width="4" fill="none"/></svg>Varai Cafe</a>
+  <nav><a href="#menu" data-i="n_menu"></a><a href="#book" data-i="n_book"></a><a href="#visit" data-i="n_visit"></a></nav>
+  <div class="right"><div class="lang" role="group" aria-label="Language"><button data-l="en">EN</button><button data-l="hi">हिं</button></div><a class="btn sun sm book-top" href="#book" data-i="book"></a></div>
+</div></header>
+
+<main id="top">
+<section class="hero"><div class="wrap hgrid">
+  <div>
+    <span class="open" id="open"><i></i><span id="openTxt"></span></span>
+    <h1 data-i="h1"></h1>
+    <p class="lead" data-i="hp"></p>
+    <ul class="perks">
+      <li><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1B1613" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12.5l4 4 8-9"/></svg><span data-i="b1"></span></li>
+      <li><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1B1613" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12.5l4 4 8-9"/></svg><span data-i="b2"></span></li>
+      <li><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1B1613" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12.5l4 4 8-9"/></svg><span data-i="b3"></span></li>
+    </ul>
+  </div>
+  <div class="card" id="book" aria-live="polite"></div>
+</div></section>
+
+<section class="menu-sec" id="menu"><div class="wrap">
+  <div class="mhead"><h2 data-i="menu_h"></h2><p data-i="menu_p"></p></div>
+  <div class="tabs" id="tabs" role="tablist"></div>
+  <div class="menu" id="menuList"></div>
+</div></section>
+
+<section class="visit" id="visit"><div class="wrap">
+  <h2 data-i="visit_h"></h2>
+  <div class="vgrid">
+    <div><p class="addr" data-i="addr"></p><p style="margin:18px 0 26px;font-size:20px;font-weight:600">+91 98765 43210</p>
+      <div class="row" style="justify-content:flex-start"><a class="btn sun" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=cafe" data-i="dir"></a><a class="btn" style="background:transparent;border-color:#fff" href="tel:+919876543210" data-i="call"></a></div></div>
+    <div class="hrs"><div><span data-i="wk"></span><b>9:00 am – 11:00 pm</b></div><div><span data-i="we"></span><b>8:00 am – 12:00 am</b></div></div>
+  </div>
+  <footer><div class="wrap" style="padding:0"><span>© 2026 Varai Cafe</span><span><span data-i="by"></span> <a style="margin-left:4px" href="https://www.varaitech.in" target="_blank" rel="noopener">Varai Technologies</a><a href="#admin" data-i="staff"></a></span></div></footer>
+</div></section>
+</main>
+</div>
+<div id="admin"><div class="wrap" id="adminBody"></div></div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const T={
+en:{n_menu:"Menu",n_book:"Book a table",n_visit:"Find us",book:"Book a table",h1:"Good coffee. Your table, ready.",
+hp:"Slow mornings, long chats, honest food. Book in under a minute and walk straight in.",
+b1:"Instant booking code",b2:"Free to cancel, just call us",b3:"Table held for 15 minutes",
+menu_h:"What we serve",menu_p:"Made fresh, all day. Prices in rupees.",visit_h:"Come say hello",
+addr:"Shop 4, Main Road, near the Station, Mumbai 400001",dir:"Get directions",call:"Call us",wk:"Monday to Friday",we:"Saturday and Sunday",by:"Website by",staff:"Staff",
+openNow:"Open now, till ",shut:"Closed now, opens ",s1:"How many, and when?",s2:"Pick a time",s3:"Your details",step:"Step",of:"of",
+guests:"Number of guests",date:"Date",time:"Available times",name:"Your name",phone:"Mobile number",note:"Anything we should know? (optional)",
+next:"Continue",back:"Back",confirm:"Confirm booking",today:"Today",tmrw:"Tomorrow",left:" left",full:"Full",big:"For 9 or more guests, please call us.",
+e_time:"Pick a time to continue.",e_name:"Enter your name.",e_ph:"Enter a 10-digit mobile number.",e_gone:"That time just filled up. Pick another.",
+done:"You're booked!",donep:"Show this code when you arrive.",on:"for",people:"guests",another:"Book another table",cal:"Add to calendar",wa:"Share on WhatsApp",
+a_h:"Bookings",a_pin:"Staff access",a_pin_p:"Enter PIN",a_go:"Open",a_bad:"Wrong PIN. Try again.",a_t:"Today",a_u:"Upcoming",a_g:"Guests today",a_when:"When",a_who:"Guest",a_st:"Status",a_code:"Code",a_none:"No bookings yet.",
+confirmed:"Confirmed",cancelled:"Cancelled",arrived:"Arrived",cancel:"Cancel",restore:"Restore",arrive:"Mark arrived",exit:"← Back to website",reset:"Reset demo data",
+cats:{coffee:"Coffee",tea:"Tea & Cold",bites:"Bites",sweet:"Desserts"}},
+hi:{n_menu:"मेन्यू",n_book:"टेबल बुक करें",n_visit:"पता",book:"टेबल बुक करें",h1:"बढ़िया कॉफ़ी। आपकी टेबल तैयार।",
+hp:"सुकून भरी सुबह, लंबी बातें, घर जैसा खाना। एक मिनट में बुक करें और सीधे अंदर आइए।",
+b1:"तुरंत बुकिंग कोड",b2:"रद्द करना मुफ़्त, बस फ़ोन करें",b3:"टेबल 15 मिनट तक रुकी रहेगी",
+menu_h:"हमारा मेन्यू",menu_p:"ताज़ा बना, पूरे दिन। कीमतें रुपये में।",visit_h:"हमसे मिलने आइए",
+addr:"दुकान 4, मेन रोड, स्टेशन के पास, मुंबई 400001",dir:"रास्ता देखें",call:"फ़ोन करें",wk:"सोमवार से शुक्रवार",we:"शनिवार और रविवार",by:"वेबसाइट बनाई:",staff:"स्टाफ़",
+openNow:"अभी खुला है, रात ",shut:"अभी बंद है, खुलेगा ",s1:"कितने लोग, कब?",s2:"समय चुनें",s3:"आपकी जानकारी",step:"चरण",of:"/",
+guests:"मेहमानों की संख्या",date:"तारीख़",time:"उपलब्ध समय",name:"आपका नाम",phone:"मोबाइल नंबर",note:"कुछ बताना हो तो लिखें (ज़रूरी नहीं)",
+next:"आगे",back:"पीछे",confirm:"बुकिंग पक्की करें",today:"आज",tmrw:"कल",left:" बाकी",full:"भरा",big:"9 या ज़्यादा लोगों के लिए कृपया फ़ोन करें।",
+e_time:"आगे बढ़ने के लिए समय चुनें।",e_name:"अपना नाम लिखें।",e_ph:"10 अंकों का मोबाइल नंबर लिखें।",e_gone:"यह समय अभी भर गया। दूसरा चुनें।",
+done:"बुकिंग हो गई!",donep:"आते समय यह कोड दिखाइए।",on:"के लिए",people:"लोग",another:"एक और टेबल बुक करें",cal:"कैलेंडर में जोड़ें",wa:"WhatsApp पर भेजें",
+a_h:"बुकिंग",a_pin:"स्टाफ़ प्रवेश",a_pin_p:"पिन डालें",a_go:"खोलें",a_bad:"गलत पिन। फिर कोशिश करें।",a_t:"आज",a_u:"आने वाली",a_g:"आज के मेहमान",a_when:"कब",a_who:"मेहमान",a_st:"स्थिति",a_code:"कोड",a_none:"अभी कोई बुकिंग नहीं।",
+confirmed:"पक्की",cancelled:"रद्द",arrived:"आ गए",cancel:"रद्द करें",restore:"वापस लें",arrive:"आ गए",exit:"← वेबसाइट पर वापस",reset:"डेमो डेटा रीसेट",
+cats:{coffee:"कॉफ़ी",tea:"चाय और कोल्ड",bites:"नाश्ता",sweet:"मीठा"}}};
+const M=[
+["coffee","Filter Coffee","फ़िल्टर कॉफ़ी",120,1],["coffee","Cappuccino","कैपुचिनो",180,1],["coffee","Cafe Latte","कैफ़े लाटे",190,1],["coffee","Hazelnut Mocha","हेज़लनट मोका",220,1],["coffee","Americano","अमेरिकानो",150,1],["coffee","Cold Brew","कोल्ड ब्रू",210,1],
+["tea","Masala Chai","मसाला चाय",80,1],["tea","Ginger Lemon Tea","अदरक नींबू चाय",90,1],["tea","Iced Peach Tea","आइस्ड पीच टी",160,1],["tea","Fresh Lime Soda","फ्रेश लाइम सोडा",110,1],["tea","Mango Cooler","मैंगो कूलर",170,1],["tea","Thick Cold Coffee","थिक कोल्ड कॉफ़ी",200,1],
+["bites","Masala Omelette Pav","मसाला ऑमलेट पाव",170,0],["bites","Paneer Tikka Sandwich","पनीर टिक्का सैंडविच",230,1],["bites","Chicken Club Sandwich","चिकन क्लब सैंडविच",270,0],["bites","Veg Maggi","वेज मैगी",130,1],["bites","Peri Peri Fries","पेरी पेरी फ्राइज़",180,1],["bites","Cheese Garlic Bread","चीज़ गार्लिक ब्रेड",190,1],
+["sweet","Brownie with Ice Cream","आइसक्रीम के साथ ब्राउनी",240,1],["sweet","Blueberry Cheesecake","ब्लूबेरी चीज़केक",260,1],["sweet","Gulab Jamun Tart","गुलाब जामुन टार्ट",190,1],["sweet","Tiramisu Cup","तिरामिसु कप",250,1]];
+let L=(()=>{try{return localStorage.getItem("vc_lang")||"en"}catch(e){return"en"}})(),cat="coffee";
+const SLOTS=[];for(let h=12;h<=21;h++){SLOTS.push(h+":00",h+":30")}SLOTS.push("22:00");
+const CAP=6,K="vc_bookings";
+const pad=n=>String(n).padStart(2,"0"),fmtT=s=>{const[h,m]=s.split(":").map(Number);return(h%12||12)+":"+pad(m)+" "+(h<12?"am":"pm")};
+const iso=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const addD=n=>{const d=new Date();d.setDate(d.getDate()+n);return d};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const loc=()=>L==="hi"?"hi-IN":"en-IN";
+const dLabel=s=>new Date(s+"T00:00").toLocaleDateString(loc(),{weekday:"short",day:"numeric",month:"short"});
+function load(){try{const v=JSON.parse(localStorage.getItem(K));if(v)return v}catch(e){}
+  const t=iso(addD(0)),n=iso(addD(1)),s=[];
+  [["12:30",5],["13:00",6],["13:00",6],["20:00",4],["20:00",4],["20:00",2],["20:30",3]].forEach((x,i)=>s.push({id:"S"+i,date:i<5?t:n,time:x[0],guests:x[1],name:["Aarav Shah","Meera Nair","Rohan Iyer","Sana Khan","Dev Patel","Isha Rao","Kabir Mehta"][i],phone:"9800000000",note:"",status:"confirmed",code:"VC-"+(1000+i*37)}));
+  save(s);return s}
+function save(b){try{localStorage.setItem(K,JSON.stringify(b))}catch(e){}}
+const used=(b,d,t)=>b.filter(x=>x.date===d&&x.time===t&&x.status!=="cancelled").length;
+
+function openStatus(){const n=new Date(),wk=n.getDay()>0&&n.getDay()<6,o=wk?9:8,c=wk?23:24,h=n.getHours()+n.getMinutes()/60,t=L;
+  const f=x=>x===24?"12 am":(x%12||12)+(x<12?" am":" pm");
+  const isOpen=h>=o&&h<c;$("#open").classList.toggle("shut",!isOpen);
+  $("#openTxt").textContent=isOpen?T[t].openNow+f(c):T[t].shut+(h<o?f(o):f(9))}
+function applyLang(){
+  document.documentElement.lang=L;
+  $$("[data-i]").forEach(e=>e.textContent=T[L][e.dataset.i]);
+  $$(".lang button").forEach(b=>b.classList.toggle("on",b.dataset.l===L));
+  openStatus();renderTabs();renderMenu();renderBook();if(location.hash==="#admin")renderAdmin();
+}
+$$(".lang button").forEach(b=>b.onclick=()=>{L=b.dataset.l;try{localStorage.setItem("vc_lang",L)}catch(e){}applyLang()});
+function renderTabs(){$("#tabs").innerHTML=Object.keys(T[L].cats).map(c=>`<button role="tab" aria-selected="${c===cat}" class="${c===cat?"on":""}" data-c="${c}">${T[L].cats[c]}</button>`).join("");
+  $$("#tabs button").forEach(b=>b.onclick=()=>{cat=b.dataset.c;renderTabs();renderMenu()})}
+function renderMenu(){$("#menuList").innerHTML=M.filter(m=>m[0]===cat).map(m=>`<div class="item"><b><i class="v ${m[4]?"":"nv"}" title="${m[4]?"Veg":"Non-veg"}"></i>${L==="hi"?m[2]:m[1]}</b><hr><span class="p">₹${m[3]}</span></div>`).join("")}
+
+/* booking */
+const fresh=()=>({step:1,guests:2,date:iso(addD(0)),time:"",name:"",phone:"",note:"",err:"",code:""});
+let S=fresh();
+function dateChips(){return[0,1,2,3,4,5,6].map(n=>{const d=addD(n),v=iso(d);const top=n===0?T[L].today:n===1?T[L].tmrw:d.toLocaleDateString(loc(),{weekday:"short"});
+  return`<button class="chip ${S.date===v?"on":""}" data-d="${v}">${top}<small>${d.toLocaleDateString(loc(),{day:"numeric",month:"short"})}</small></button>`}).join("")}
+const head=(t,title)=>`<div class="prog">${[1,2,3].map(i=>`<i class="${i<=S.step?"on":""}"></i>`).join("")}</div><span class="step">${t.step} ${S.step} ${t.of} 3</span><h3>${title}</h3>`;
+function renderBook(){
+  const t=T[L],b=load(),P=$("#book");let h="";
+  if(S.step===1){
+    h=`${head(t,t.s1)}<span class="lbl">${t.guests}</span>
+    <div class="stp"><button data-gs="-1" aria-label="−" ${S.guests<=1?"disabled":""}>−</button><b>${S.guests}</b><button data-gs="1" aria-label="+" ${S.guests>=8?"disabled":""}>+</button><span>${t.people}</span></div>
+    <p class="hint">${t.big}</p>
+    <span class="lbl">${t.date}</span><div class="chips scroll">${dateChips()}</div>
+    <div class="nav2"><button class="btn" id="go">${t.next}</button></div>`;
+  }else if(S.step===2){
+    const now=new Date(),isToday=S.date===iso(now);
+    h=`${head(t,t.s2)}<div class="sum">${dLabel(S.date)}, ${S.guests} ${t.people}</div><span class="lbl">${t.time}</span><div class="times">${SLOTS.map(s=>{
+      const[hh,mm]=s.split(":").map(Number),past=isToday&&(hh*60+mm<=now.getHours()*60+now.getMinutes());
+      const left=CAP-used(b,S.date,s),dis=past||left<=0;
+      return`<button class="chip ${S.time===s?"on":""}" ${dis?"disabled":""} data-t="${s}">${fmtT(s)}${!dis&&left<=2?`<em>${left}${t.left}</em>`:dis&&!past?`<em>${t.full}</em>`:""}</button>`}).join("")}</div>
+    <p class="err">${S.err}</p><div class="nav2"><button class="btn ghost" id="bk">${t.back}</button><button class="btn" id="go">${t.next}</button></div>`;
+  }else if(S.step===3){
+    h=`${head(t,t.s3)}<div class="sum">${dLabel(S.date)}, ${fmtT(S.time)}, ${S.guests} ${t.people}</div>
+    <label class="lbl" for="nm">${t.name}</label><input id="nm" autocomplete="name" value="${esc(S.name)}">
+    <label class="lbl" for="ph">${t.phone}</label><input id="ph" type="tel" inputmode="numeric" maxlength="10" autocomplete="tel" value="${esc(S.phone)}" placeholder="98XXXXXXXX">
+    <label class="lbl" for="nt">${t.note}</label><input id="nt" value="${esc(S.note)}">
+    <p class="err">${S.err}</p><div class="nav2"><button class="btn ghost" id="bk">${t.back}</button><button class="btn" id="go">${t.confirm}</button></div>`;
+  }else{
+    h=`<div class="done"><div class="tick"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+    <h3>${t.done}</h3><p style="margin-top:8px">${esc(S.name)} ${t.on} ${S.guests} ${t.people}<br><b>${dLabel(S.date)}, ${fmtT(S.time)}</b></p>
+    <div class="ticket"><div class="code">${S.code}</div><p class="hint" style="margin-top:4px">${t.donep}</p></div>
+    <div class="row"><button class="btn sm ghost" id="ics">${t.cal}</button><a class="btn sm ghost" target="_blank" rel="noopener" href="https://wa.me/?text=${encodeURIComponent("Varai Cafe: "+dLabel(S.date)+", "+fmtT(S.time)+", "+S.guests+" "+t.people+". "+S.code)}">${t.wa}</a></div>
+    <div class="row"><button class="btn sm" id="again">${t.another}</button></div></div>`;
+  }
+  P.innerHTML=h;wire();
+}
+function wire(){
+  $$("[data-gs]").forEach(e=>e.onclick=()=>{S.guests=Math.min(8,Math.max(1,S.guests+ +e.dataset.gs));renderBook()});
+  $$("[data-d]").forEach(e=>e.onclick=()=>{S.date=e.dataset.d;S.time="";renderBook()});
+  $$("[data-t]").forEach(e=>e.onclick=()=>{S.time=e.dataset.t;S.err="";renderBook()});
+  const bk=$("#bk"),go=$("#go"),ag=$("#again"),ics=$("#ics");
+  if(bk)bk.onclick=()=>{keep();S.err="";S.step--;renderBook()};
+  if(ag)ag.onclick=()=>{S=fresh();renderBook()};
+  if(ics)ics.onclick=()=>{const[h,m]=S.time.split(":").map(Number),d=S.date.replace(/-/g,""),e=pad(h+1)+pad(m+30>59?0:m+30);
+    const end=m+30>59?pad(h+2)+"00":pad(h+1)+pad(m+30);
+    const txt=["BEGIN:VCALENDAR","VERSION:2.0","BEGIN:VEVENT","SUMMARY:Table at Varai Cafe ("+S.code+")","DTSTART:"+d+"T"+pad(h)+pad(m)+"00","DTEND:"+d+"T"+end+"00","LOCATION:Varai Cafe","END:VEVENT","END:VCALENDAR"].join("\r\n");
+    const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([txt],{type:"text/calendar"}));a.download="varai-cafe-booking.ics";a.click()};
+  if(go)go.onclick=()=>{keep();const t=T[L];
+    if(S.step===1){S.step=2;S.err="";return renderBook()}
+    if(S.step===2){if(!S.time){S.err=t.e_time;return renderBook()}S.err="";S.step=3;return renderBook()}
+    if(S.name.trim().length<2){S.err=t.e_name;return renderBook()}
+    if(!/^[6-9]\d{9}$/.test(S.phone)){S.err=t.e_ph;return renderBook()}
+    const b=load();if(CAP-used(b,S.date,S.time)<=0){S.step=2;S.time="";S.err=t.e_gone;return renderBook()}
+    S.code="VC-"+Math.floor(1000+Math.random()*9000);
+    b.push({id:"B"+Date.now(),date:S.date,time:S.time,guests:S.guests,name:S.name.trim(),phone:S.phone,note:S.note.trim(),status:"confirmed",code:S.code});
+    save(b);S.step=4;renderBook()};
+}
+function keep(){const n=$("#nm"),p=$("#ph"),t=$("#nt");if(n)S.name=n.value;if(p)S.phone=p.value.replace(/\D/g,"");if(t)S.note=t.value}
+
+/* staff view */
+let authed=false;
+function renderAdmin(){
+  const t=T[L],A=$("#adminBody");
+  if(!authed){A.innerHTML=`<div class="pin"><h2>${t.a_pin}</h2><p class="hint">${t.a_pin_p} (demo: 1234)</p><input id="pin" type="password" inputmode="numeric" maxlength="4" autofocus><p class="err" id="pe"></p><button class="btn" id="pgo">${t.a_go}</button><p style="margin-top:20px"><a href="#top">${t.exit}</a></p></div>`;
+    const f=()=>{if($("#pin").value==="1234"){authed=true;renderAdmin()}else $("#pe").textContent=t.a_bad};$("#pgo").onclick=f;$("#pin").onkeydown=e=>{if(e.key==="Enter")f()};return}
+  const b=load().sort((x,y)=>(x.date+x.time).localeCompare(y.date+y.time)),td=iso(new Date());
+  const act=b.filter(x=>x.status!=="cancelled"),tod=act.filter(x=>x.date===td);
+  A.innerHTML=`<p><a href="#top">${t.exit}</a></p><h2 style="margin-top:12px">${t.a_h}</h2>
+  <div class="stats"><div class="stat"><b>${tod.length}</b><span>${t.a_t}</span></div><div class="stat"><b>${act.filter(x=>x.date>td).length}</b><span>${t.a_u}</span></div><div class="stat"><b>${tod.reduce((a,x)=>a+x.guests,0)}</b><span>${t.a_g}</span></div></div>
+  <div class="tw"><table><thead><tr><th>${t.a_when}</th><th>${t.a_who}</th><th>${t.a_code}</th><th>${t.a_st}</th><th></th></tr></thead><tbody>${b.length?b.map(x=>`<tr><td><b>${dLabel(x.date)}</b><br>${fmtT(x.time)}</td><td>${esc(x.name)}, ${x.guests}<br><small style="color:var(--mute)">${esc(x.phone)}${x.note?" · "+esc(x.note):""}</small></td><td><b>${x.code}</b></td><td><span class="pill ${x.status}">${t[x.status]}</span></td><td style="white-space:nowrap">${x.status==="confirmed"?`<button class="btn sm" data-a="${x.id}">${t.arrive}</button> `:""}<button class="btn sm ghost" data-x="${x.id}">${x.status==="cancelled"?t.restore:t.cancel}</button></td></tr>`).join(""):`<tr><td colspan="5">${t.a_none}</td></tr>`}</tbody></table></div>
+  <p style="margin-top:20px"><button class="btn sm ghost" id="rs">${t.reset}</button></p>`;
+  $$("[data-x]").forEach(e=>e.onclick=()=>{const a=load(),i=a.find(y=>y.id===e.dataset.x);i.status=i.status==="cancelled"?"confirmed":"cancelled";save(a);renderAdmin()});
+  $$("[data-a]").forEach(e=>e.onclick=()=>{const a=load();a.find(y=>y.id===e.dataset.a).status="arrived";save(a);renderAdmin()});
+  $("#rs").onclick=()=>{try{localStorage.removeItem(K)}catch(e){}renderAdmin()};
+}
+function route(){const a=location.hash==="#admin";$("#site").style.display=a?"none":"";$("#admin").style.display=a?"block":"none";if(a){authed=false;renderAdmin();scrollTo(0,0)}}
+addEventListener("hashchange",route);
+applyLang();route();
+</script>
+</body>
+</html>
